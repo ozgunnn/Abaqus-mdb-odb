@@ -14,7 +14,7 @@ regionDef = mdb.models['A12'].rootAssembly.allInstances[partToInstance[partName]
 mdb.models[modelName].HistoryOutputRequest(name='H-Output-2',
                                            createStepName='Step-1', variables=('LE11', 'LE22', 'LE33', 'LE12', 'LE13',
                                                                                'LE23', 'LEP'), region=regionDef, sectionPoints=DEFAULT)
-
+sa
 elementNames = []
 
 for i in set.elements:
