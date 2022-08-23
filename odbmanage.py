@@ -4,12 +4,8 @@ import csv
 from odbAccess import *
 from caeModules import *
 from textRepr import *
-<<<<<<< HEAD
 ##open odb
-=======
-# open odb
->>>>>>> 8808201219f1e431d35bf2ff9e11f64cd25b4d25
-odb = openOdb(path='Job_A12.odb')
+odb = openOdb(path='Job_A12-Copy.odb')
 
 # initialize empty list
 elementNames = []
@@ -24,32 +20,23 @@ for text in odb.steps['Step-1'].historyRegions.keys():
     except:
         pass
 
-print(elementNames)
+# get the output of loading at reference point, take absolute value of forces
+# enumerate the list of tuples to find the index of the tuple with max force
+lis = odb.steps['Step-1'].historyRegions.values()[-1].historyOutputs['RF3'].data
+absLis = [(i[0], abs(i[1])) for i in lis]
+enuAbsLis = enumerate(absLis)
+maxValues = max(enuAbsLis,key=lambda item:item[1][1])
+maxForce = maxValues[1][1]
+maxIndex = maxValues[0]
 
-# all nodes in the part of interest are chosen
-allNodes = odb.rootAssembly.instances['Concrete Instance'].nodes[:]
-
-# connectivities of each element obtained with this loop
+outDict={}
 for i in elementNames:
-    search = '.' + str(i) + ' '
-    print('search', search)
-    key = [key for key in odb.steps['Step-1'].historyRegions.keys()
-           if search in key]
-    print('key', key[0])
-    elementNodes = odb.steps['Step-1'].historyRegions[key[0]
-                                                      ].point.element.connectivity
-    print(elementNodes)
-    xSum = 0
-    ySum = 0
-    zSum = 0
-# query the nodes with labels of vertices of element of interest and average them to find element centroid
-    for i in elementNodes:
-        node = [node for node in allNodes if node.label == i]
-        xSum += node[0].coordinates[0]
-        ySum += node[0].coordinates[0]
-        zSum += node[0].coordinates[0]
-        midpoint = [xSum/8, ySum/8, zSum/8]
+    le3 = odb.steps['Step-1'].historyRegions['Element Concrete Instance.'+str(i)+' Int Point 1'].historyOutputs['LE33'].data[maxIndex][1]
+    xCo = odb.steps['Step-1'].historyRegions.values()[-2].historyOutputs['COORDCOM1  of element set ASSEMBLY_Concrete Instance_ELEMENT'+str(i)].data[0][1]
+    yCo = odb.steps['Step-1'].historyRegions.values()[-2].historyOutputs['COORDCOM2  of element set ASSEMBLY_Concrete Instance_ELEMENT'+str(i)].data[0][1]
+    outDict[str(i)] = (xCo, yCo, le3)
 
-    print("centroid of element: ", i, "is ", midpoint)
+odb.steps['Step-1'].historyRegions.values()[-1].historyOutputs.values()[-1].data[0]
 
-# why need mdb?
+
+
