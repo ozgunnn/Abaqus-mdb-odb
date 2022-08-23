@@ -5,7 +5,7 @@ from odbAccess import *
 from caeModules import *
 from textRepr import *
 ##open odb
-odb = openOdb(path='Job_section.odb')
+odb = openOdb(path='Job_A12.odb')
 
 ##in this line, only one element of chosen region is picked
 elementNodes = odb.steps['Step-1'].historyRegions.values()[1].point.element.connectivity
