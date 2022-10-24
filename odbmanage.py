@@ -5,13 +5,14 @@ from odbAccess import *
 from caeModules import *
 from textRepr import *
 # open odb
+modelNo = 1390
 
-odbBuckle = openOdb(path='Job_1_buckle.odb')
+# odbBuckle = openOdb(path='Job_'+str(modelNo)+'_buckle.odb')
 
-eig1 = float(odbBuckle.steps['Step-1'].frames[1].description.split()[-1])
-eig2 = float(odbBuckle.steps['Step-1'].frames[2].description.split()[-1])
+# eig1 = float(odbBuckle.steps['Step-1'].frames[1].description.split()[-1])
+# eig2 = float(odbBuckle.steps['Step-1'].frames[2].description.split()[-1])
 
-odb = openOdb(path='Job_1_geoimp.odb')
+odb = openOdb(path='Job_'+str(modelNo)+'_geoimp.odb')
 
 # initialize empty list
 elementNames = []
