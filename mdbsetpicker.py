@@ -1,6 +1,6 @@
 
-modelName = '1390_geoimp'
-length = 7000  # full length
+modelName = '55_geoimp'
+length = 3500  # full length
 
 halfLength = float(length/2)
 lengthToCutNo = {
@@ -50,6 +50,8 @@ partBeam.Set(elements=partBeam.elements.getByBoundingBox(
     xMin=-5, xMax=5, yMin=-45, yMax=45, zMin=1750-50, zMax=1750+10), name='mid_node')
 partBeam.SetFromElementLabels(
     elementLabels=(partBeam.sets['mid_node'].elements[0].label,), name='mid_node')
+partBeam.SetFromNodeLabels(nodeLabels=(
+    partBeam.sets['mid_node'].elements[0].connectivity[0],), name='mid_node')
 
 # create set for force application point
 r1 = rootA.referencePoints
