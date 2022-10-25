@@ -47,6 +47,7 @@ outDict['u'] = []
 outDict['f'] = []
 outDict['max u'] = []
 outDict['max f'] = []
+outDict['max m'] = []
 outDict['eigens'] = []
 
 for i in elementNames:
@@ -65,22 +66,46 @@ for i in elementNames:
     outDict['le3'].append(le3)
 
 for i in range(180):
-    outDict['u'].append(odb.steps['Step-1'].historyRegions.values()
-                        [-1].historyOutputs.values()[0].data[i][1])
+    outDict['u'].append(abs(odb.steps['Step-1'].historyRegions.values()
+                        [-1].historyOutputs.values()[0].data[i][1]))
     outDict['f'].append(absLis[i][1])
 
 uAtMax = abs(outDict['u'][maxIndex])
 outDict['max u'].append(uAtMax)
 outDict['max f'].append(maxForce)
+outDict['max m'].append(uAtMax*maxForce)
 
 outDict['eigens'].append(eig1)
 outDict['eigens'].append(eig2)
+
+csvLength = max(len(elementNames), len(outDict['u']))
 
 with open(str(modelNo)+'.csv', 'wb') as f:
     w = csv.writer(f)
     key_list = list(outDict.keys())
     w.writerow(outDict.keys())
-    for i in range(len(elementNames)):
+    for i in range(csvLength):
+        if i == 0:
+            pass
+        if i > 0:
+            outDict['max u'].append('')
+            outDict['max f'].append('')
+            outDict['max m'].append('')
+
+        if i > 1:
+            outDict['eigens'].append('')
+
+        if i > len(elementNames)-1:
+            outDict['id'].append('')
+            outDict['x'].append('')
+            outDict['y'].append('')
+            outDict['z'].append('')
+            outDict['le3'].append('')
+
+        if i > 180-1:
+            outDict['u'].append('')
+            outDict['f'].append('')
+
         w.writerow([outDict[x][i] for x in key_list])
 
 odb.close()
