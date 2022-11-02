@@ -49,6 +49,7 @@ outDict['max u'] = []
 outDict['max f'] = []
 outDict['max m'] = []
 outDict['eigens'] = []
+outDict['max index'] = []
 
 for i in elementNames:
     le3 = odb.steps['Step-1'].historyRegions['Element Concrete Instance.' +
@@ -78,6 +79,8 @@ outDict['max m'].append(uAtMax*maxForce)
 outDict['eigens'].append(eig1)
 outDict['eigens'].append(eig2)
 
+outDict['max index'].append(maxIndex)
+
 csvLength = max(len(elementNames), len(outDict['u']))
 
 with open(str(modelNo)+'.csv', 'wb') as f:
@@ -91,6 +94,7 @@ with open(str(modelNo)+'.csv', 'wb') as f:
             outDict['max u'].append('')
             outDict['max f'].append('')
             outDict['max m'].append('')
+            outDict['max index'].append('')
 
         if i > 1:
             outDict['eigens'].append('')
