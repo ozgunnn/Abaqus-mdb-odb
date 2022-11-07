@@ -6,7 +6,7 @@ from caeModules import *
 from textRepr import *
 from collections import OrderedDict
 # open odb
-modelNo = 55
+modelNo = 3340
 
 odbBuckle = openOdb(path='Job_'+str(modelNo)+'_buckle.odb')
 
