@@ -7,8 +7,8 @@ from textRepr import *
 from collections import OrderedDict
 import os
 import re
-path = 'D:\Parametric ODBs'
-#path = 'P:\ParametricODBs'
+#path = 'D:\Parametric ODBs'
+path = 'P:\ParametricODBs'
 s = set()
 for fname in os.listdir(path):
     res = re.findall("_(\d+)_", fname)
